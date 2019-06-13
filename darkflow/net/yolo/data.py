@@ -128,7 +128,7 @@ def shuffle(self):
                     feed_batch[key] = np.concatenate([ 
                         old_feed, [new] 
                     ])      
-            
+            if len(x_batch) == 0: continue
             x_batch = np.concatenate(x_batch, 0)
             yield x_batch, feed_batch
         
