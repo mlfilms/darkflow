@@ -142,14 +142,25 @@ def runFlowCFG(cfg):
     '''    
     filePattern = 	os.path.join(targetDir,'*.'+cfg['darkflow']["image_ext"])
     print(filePattern)
-    for filename in glob.glob(filePattern):
+    files = glob.glob(filePattern)
+    numFiles = len(files)
+    spacing = numFiles/cfg['darkflow']['saveNum']
+
+    imNum = 1
+    for filename in files:
     
         (im,result) = processImage(filename,tfnet,box)
         #sections = filename.split("\\")
         imName = os.path.basename(filename)
         #imName = sections[-1]
-        saveName = os.path.join(outDir,imName)
-        im.save(saveName)
+        if cfg['darkflow']['genMarkedImages']:
+            if cfg['darkflow']['saveAll']:
+                saveName = os.path.join(outDir,imName)
+                im.save(saveName)
+            elif imNum % spacing ==0:
+                saveName = os.path.join(outDir,imName)
+                im.save(saveName)
+
         
         numDets = len(result)
         
@@ -165,6 +176,7 @@ def runFlowCFG(cfg):
         f = open(jsonName,"w")
         f.write(dataJSON)
         f.close
+        imNum = imNum+1
         
             
 
