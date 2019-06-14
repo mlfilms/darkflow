@@ -120,8 +120,8 @@ def runFlowCFG(cfg):
     targetDir = cfg['darkflow']["run_directory"]
     #'E:/Projects/fake/data/defectData/corrected'
     print(targetDir)   
-    outDir = targetDir+"\\outIMG\\"
-
+    outDir = os.path.join(targetDir,'outIMG')
+    print(outDir)
     if not os.path.exists(outDir):
         os.makedirs(outDir)
     '''
@@ -140,14 +140,16 @@ def runFlowCFG(cfg):
         xy.append(0)
         # Keep presets   
     '''    
-    filePattern = 	targetDir+"\\*."+cfg['darkflow']["image_ext"]   
-
+    filePattern = 	os.path.join(targetDir,'*.'+cfg['darkflow']["image_ext"])
+    print(filePattern)
     for filename in glob.glob(filePattern):
     
         (im,result) = processImage(filename,tfnet,box)
-        sections = filename.split("\\")
-        imName = sections[-1]
-        im.save(outDir+imName)
+        #sections = filename.split("\\")
+        imName = os.path.basename(filename)
+        #imName = sections[-1]
+        saveName = os.path.join(outDir,imName)
+        im.save(saveName)
         
         numDets = len(result)
         
@@ -159,7 +161,8 @@ def runFlowCFG(cfg):
         prePost = imName.split(".")
         noEnd = prePost[0]
         
-        f = open(outDir+noEnd+".json","w")
+        jsonName = os.path.join(outDir,noEnd+".json")
+        f = open(jsonName,"w")
         f.write(dataJSON)
         f.close
         
