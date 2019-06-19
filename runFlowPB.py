@@ -103,8 +103,8 @@ def runFlowCFG(cfg):
 
     if cfg['darkflow']['runTrained']:
         
-        pbTarget = 'ckpt/'+name+'.pb'
-        metaTarget = 'ckpt/'+name+'.meta'
+        pbTarget = os.path.join(cfg['temp']['rootDir'],cfg['paths']['darkflow'],'built_graph', name+'.pb')
+        metaTarget = os.path.join(cfg['temp']['rootDir'],cfg['paths']['darkflow'],'built_graph', name+'.meta')
     else:
         pbTarget = os.path.join(os.getcwd(),cfg['darkflow']['pb_file'])
         metaTarget = os.path.join(os.getcwd(),cfg['darkflow']['meta_file'])
