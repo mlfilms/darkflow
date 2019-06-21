@@ -35,18 +35,18 @@ def trainFlowCFG(cfg):
     tfnet.train()
     tfnet.savepb()
 
+    if cfg['meta']['saveRun']:
+        modelPath = cfg['darkflow']['model']
+        path, filename = os.path.split(modelPath)
+        name, ext = os.path.splitext(filename)
 
-    modelPath = cfg['darkflow']['model']
-    path, filename = os.path.split(modelPath)
-    name, ext = os.path.splitext(filename)
 
-
-    pathPB = os.path.join('built_graphs', name+'.pb')
-    pathMeta = os.path.join('built_graphs', name+'.meta')
-    savePathPB = os.path.join(cfg['temp']['rootDir'], cfg['meta']['runName'],[cfg['meta']['runName']+'.pb'])
-    savePathMeta = os.path.join(cfg['temp']['rootDir'], cfg['meta']['runName'],[cfg['meta']['runName']+'.meta'])
-    shutil.copyfile(pathPB,savePathPB)
-    shutil.copyfile(pathMeta,savePathMeta)
+        pathPB = os.path.join('built_graphs', name+'.pb')
+        pathMeta = os.path.join('built_graphs', name+'.meta')
+        savePathPB = os.path.join(cfg['temp']['rootDir'], cfg['meta']['runName'],[cfg['meta']['runName']+'.pb'])
+        savePathMeta = os.path.join(cfg['temp']['rootDir'], cfg['meta']['runName'],[cfg['meta']['runName']+'.meta'])
+        shutil.copyfile(pathPB,savePathPB)
+        shutil.copyfile(pathMeta,savePathMeta)
 
 
 
